@@ -1,43 +1,37 @@
 class Solution {
 public:
-    int findmax(vector<int> &piles)
+    bool canEat(vector<int>& piles,int h,int k)
     {
-        int maxi = INT_MIN;
-        for(int x : piles)
+        long long hours=0;
+        for(int pile:piles)
         {
-            maxi = max(maxi, x);
+            hours+=(pile+k-1)/k;
         }
-        return maxi;
+        if(hours<=h)return true;
+        else return false;
     }
-
-    long long calculateTotalHours(vector<int>&piles,int hourly)
-    {
-        long long totalH = 0;
-
-        for(int i = 0; i < piles.size(); i++)
-        {
-            totalH += (piles[i] + hourly - 1) / hourly;
-        }
-
-        return totalH;
-    }
-
     int minEatingSpeed(vector<int>& piles, int h) {
-        int lo = 1;
-        int hi = findmax(piles);
-
-        while(lo <= hi)
+        int low=1;
+        int high=0;
+        for(int i=0;i<piles.size();i++)
         {
-            int mid = lo + (hi - lo) / 2;
-
-            long long totalH = calculateTotalHours(piles, mid);
-
-            if(totalH <= h)
-                hi = mid - 1;
-            else
-                lo = mid + 1;
+            high=max(high,piles[i]);
         }
-
-        return lo;
+        int ans=high;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(canEat(piles,h,mid))
+            {
+                ans=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ans;
+        
     }
 };
