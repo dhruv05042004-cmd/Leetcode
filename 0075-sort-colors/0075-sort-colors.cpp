@@ -11,18 +11,14 @@ public:
         {
             if(nums[mid]==2)
             {
-                temp=nums[mid];
-                nums[mid]=nums[hi];
-                nums[hi]=temp;
+                swap(nums[mid],nums[hi]);
                 hi--;
 
             }
 
             else if(nums[mid]==0)
             {
-                temp=nums[mid];
-                nums[mid]=nums[lo];
-                nums[lo]=temp;
+                swap(nums[lo],nums[mid]);
                 lo++;
                 mid++;
             }
